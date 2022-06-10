@@ -1,28 +1,8 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
-import { useEffect, useState } from "react";
-import Link from 'next/link'
+import Movies from './movies/movies'
 
 export default function Home() {
-
-  const [data, setData] = useState(null)
-  const [isLoading, setLoading] = useState(false)
-  
-  useEffect(() => {
-    setLoading(true)
-    fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=85107a696f712b5b683bd5a4f10afc16')
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data)
-        setLoading(false)
-      })
-  }, [])
-
-  if (isLoading) return <p>Loading...</p>
-  if (!data) return <p>No profile data</p>
-
-  console.log(data)
 
   return (
     <div className={styles.container}>
@@ -36,20 +16,9 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to Movie Search Engine!
         </h1>
-
-        <article>
-
-<h2>Genrer</h2>
-
-{data.genres.map((item) =>  (
-
-<Link key={item.id} href={'/movies/' + item.id}>
-<li>{item.name}</li>   
-</Link>
-))}
-
-</article>    
+        <Movies/>
       </main>
+   
     </div>
   )
 }
